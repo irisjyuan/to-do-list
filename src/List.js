@@ -1,6 +1,8 @@
 import React from 'react';
 import ListItem from './ListItem';
 
+import './List.css';
+
 class List extends React.Component {
   constructor(props) {
     super();
@@ -29,8 +31,14 @@ class List extends React.Component {
         {this.state.arr.map((item, index) => (
           <ListItem key={index} item={item}></ListItem>
         ))}
-        <input onChange={this.getBall} value={this.state.newListInput}></input>
-        <button onClick={this.onClick}>+</button>
+        <div className='input-container'>
+          <input
+            onChange={this.getBall}
+            value={this.state.newListInput}
+            placeholder="Add a todo"
+          ></input>
+          <button className='input-button' onClick={this.onClick}>+</button>
+        </div>
       </div>
     );
   }
