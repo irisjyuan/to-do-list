@@ -6,7 +6,10 @@ import './List.css';
 class List extends React.Component {
   constructor(props) {
     super();
-    this.state = { arr: [], newListInput: '' };
+    this.state = {
+      arr: JSON.parse(localStorage.getItem('currentItems')),
+      newListInput: '',
+    };
     this.onClick = this.onClick.bind(this);
     this.getBall = this.getBall.bind(this);
   }
@@ -20,6 +23,7 @@ class List extends React.Component {
       var tempArr = this.state.arr;
       tempArr.push(this.state.newListInput);
       this.setState({ arr: tempArr, newListInput: '' });
+      localStorage.setItem('currentItems', JSON.stringify(tempArr));
     }
   }
 
