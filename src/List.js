@@ -12,6 +12,7 @@ class List extends React.Component {
     };
     this.onClick = this.onClick.bind(this);
     this.getBall = this.getBall.bind(this);
+    this.removeItem = this.removeItem.bind(this);
   }
 
   onClick() {
@@ -23,7 +24,7 @@ class List extends React.Component {
       var tempArr = this.state.arr;
       tempArr.push(this.state.newListInput);
       this.setState({ arr: tempArr, newListInput: '' });
-      localStorage.setItem('currentItems', JSON.stringify(tempArr));
+      localStorage.setItem('currentItems', JSON.stringify(this.state.arr));
     }
   }
 
@@ -31,18 +32,30 @@ class List extends React.Component {
     this.setState({ newListInput: e.target.value });
   }
 
+  removeItem(index) {
+    var tempArr = this.state.arr;
+    tempArr.splice(index, 1);
+    this.setState({ arr: tempArr });
+    localStorage.setItem('currentItems', JSON.stringify(this.state.arr));
+  }
+
   render() {
     return (
       <div>
         {this.state.arr.map((item, index) => (
-          <ListItem key={index} item={item}></ListItem>
+          <ListItem
+            key={index}
+            index={index}
+            item={item}
+            removeItem={this.removeItem}
+          ></ListItem>
         ))}
         <div className="input-container">
           <input
             onChange={this.getBall}
             value={this.state.newListInput}
             placeholder="Add a todo"
-          ></input>
+          />
           <button className="input-button" onClick={this.onClick}>
             +
           </button>
