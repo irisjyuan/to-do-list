@@ -7,7 +7,7 @@ class List extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      arr: JSON.parse(localStorage.getItem('currentItems')),
+      arr: JSON.parse(localStorage.getItem('currentItems')) || [],
       newListInput: '',
     };
     this.onClick = this.onClick.bind(this);
