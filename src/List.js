@@ -15,6 +15,7 @@ class List extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.getBall = this.getBall.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.updateCheck = this.updateCheck.bind(this);
   }
 
   onClick() {
@@ -24,9 +25,9 @@ class List extends React.Component {
       );
     } else {
       var tempArr = this.state.arr;
-      tempArr.push({checked: false, item: this.state.newListInput});
+      tempArr.push({ checked: false, item: this.state.newListInput });
       this.setState({ arr: tempArr, newListInput: '' });
-      localStorage.setItem('currentItems', JSON.stringify(this.state.arr));
+      localStorage.setItem('currentItems', JSON.stringify(tempArr));
     }
   }
 
@@ -41,12 +42,23 @@ class List extends React.Component {
     localStorage.setItem('currentItems', JSON.stringify(this.state.arr));
   }
 
+  updateCheck(e, index) {
+    let check = e.target.checked;
+    var tempArr = this.state.arr;
+    tempArr[index].checked = check;
+    this.setState({ arr: tempArr });
+    localStorage.setItem('currentItems', JSON.stringify(tempArr));
+  }
+
   render() {
     return (
       <div>
         {this.state.arr.map((item, index) => (
           <div>
-            <Checkbox />
+            <Checkbox
+              checked={item.checked}
+              onChange={(e) => this.updateCheck(e, index)}
+            />
             {item.item}
             <IconButton onClick={() => this.removeItem(index)}>
               <DeleteIcon />
